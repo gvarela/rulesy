@@ -1,0 +1,1 @@
+ActiveRecord::Base.extend Rulesy::Definition

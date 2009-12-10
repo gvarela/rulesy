@@ -1,0 +1,1 @@
+require 'rulesy/definition'
