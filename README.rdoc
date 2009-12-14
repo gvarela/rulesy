@@ -7,6 +7,7 @@ A very simple dsl for managing dynamic business rules. See the specs for example
 
 == Links
 http://rdoc.info/projects/gvarela/rulesy
+
 http://gemcutter.org/gems/rulesy
 
 
