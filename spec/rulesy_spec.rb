@@ -3,8 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 class Engine
   extend Rulesy::Definition
   define_rules_for :can_start do
-    rule (:has_gas) { has_gas? }
-    rule (:has_wheels) { has_wheels? }
+    rule(:has_gas) { has_gas? }
+    rule(:has_wheels, "you don't have valid wheels") { has_wheels? }
   end
 
   def has_gas?
@@ -34,7 +34,14 @@ describe Rulesy::Definition do
 
   context "have respond to method defined by rule definition" do
     it "should return false for can_start?"do
-      Engine.new.can_start?
+      Engine.new.can_start.should be( false )
+    end
+
+    it "should have a validation message when validation fails" do
+      engine = Engine.new
+      engine.can_start?
+      engine.business_rules_errors.should_not be_empty
+      engine.business_rules_errors.first.should == [:has_wheels, "you don't have valid wheels"]
     end
   end
 end

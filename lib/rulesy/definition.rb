@@ -1,6 +1,6 @@
 module Rulesy
   module Definition
-    @@rule_definitions ||= []
+    @@rule_definitions ||= {}
 
     def rule_definitions
       @@rule_definitions
@@ -8,11 +8,9 @@ module Rulesy
 
     def define_rules_for(name, &block)
       unless included_modules.include?(InstanceMethods)
-        puts 'including InstanceMethods'
         include InstanceMethods
-        attr_accessor :business_rule_errors
       end
-      rule_definitions ||= {}
+
       rule_definitions[name] = block
     end
 
@@ -28,6 +26,14 @@ module Rulesy
         @business_rules_errors ||= {}
       end
 
+      def business_rules_errors=(val)
+        @business_rules_errors = val
+      end
+
+      def rule_definitions
+        self.class.rule_definitions
+      end
+
       # def can_display
       # validate_business_rules(:can_display)
       # end
@@ -35,7 +41,7 @@ module Rulesy
 
       def method_missing(method_id, *args)
         method_name = method_id.to_s.gsub(/\?/, '').to_sym
-        if rule_definitions.key?(method_name)
+        if self.rule_definitions.key?(method_name)
           instance_variable_set( "@#{method_name}", self.validate_business_rules(method_name)) if instance_variable_get( "@#{method_name}" ).nil?
         else
           super
