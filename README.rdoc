@@ -1,6 +1,14 @@
-= rulesy
+= Rulesy
 
-Description goes here.
+A very simple dsl for managing dynamic business rules. See the specs for examples.
+
+== Install
+  gem install rulesy
+
+== Links
+http://rdoc.info/projects/gvarela/rulesy
+http://gemcutter.org/gems/rulesy
+
 
 == Note on Patches/Pull Requests
  
